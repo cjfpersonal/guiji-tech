@@ -52,5 +52,17 @@ export function getSiteUrl() {
   if (!['http:', 'https:'].includes(url.protocol)) {
     throw new Error("NEXT_PUBLIC_SITE_URL 仅支持 HTTP 或 HTTPS 协议。");
   }
-  return url.origin;
+  const pathname = url.pathname.replace(/\/+$/, "");
+  if (basePath && pathname !== basePath) {
+    throw new Error(`NEXT_PUBLIC_SITE_URL 的路径必须与 NEXT_PUBLIC_BASE_PATH=${basePath} 一致。`);
+  }
+  return `${url.origin}${basePath || pathname}`;
 }
+import { assetPath, basePath } from "@/lib/base-path";
+
+
+export function getSiteOrigin() {
+  return new URL(getSiteUrl()).origin;
+}
+
+export { assetPath };

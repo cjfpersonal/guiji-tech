@@ -29,7 +29,7 @@ export function SupplyScene() {
   return (
     <div className={`supply-scene supply-scene--${current.id}`}>
       <div className="supply-scene__visual" aria-hidden="true">
-        <Image src="/images/supply-path-ice.webp" alt="" fill sizes="(max-width: 900px) 100vw, 62vw" quality={82} />
+        <Image src={assetPath("/images/supply-path-ice.webp")} alt="" fill sizes="(max-width: 900px) 100vw, 62vw" quality={82} />
         <div className="supply-scene__shade" />
         <div className="supply-scene__pulse" />
         <div className="supply-scene__status"><span />{current.status}</div><div className="supply-scene__disclaimer">流程示意，非实时订单或库存状态</div>
@@ -64,3 +64,4 @@ export function SupplyScene() {
     </div>
   );
 }
+import { assetPath } from "@/lib/base-path";

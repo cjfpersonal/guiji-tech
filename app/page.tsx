@@ -5,6 +5,7 @@ import { RfqProvider } from "@/components/rfq-context";
 import { LazyRfq } from "@/components/lazy-rfq";
 import { SourceDeskHero } from "@/components/sourcedesk-hero";
 import { industries, manufacturers, productCategories } from "@/lib/content";
+import { assetPath } from "@/lib/base-path";
 
 const tasks = [
   { number: "01", title: "采购 · 短缺与齐套", description: "从完整型号或 BOM 开始，明确数量、日期、交付地区与关键行优先级。", href: "#products", action: "进入产品发现" },
@@ -68,9 +69,9 @@ export default function HomePage() {
     <section className="sd-section" id="resources"><div className="sd-container">
       <SectionTitle index="06" eyebrow="RESOURCES" title="可直接使用的真实静态资源。" description="文件由本站提供，下载不代表已提交需求；邮件附件请在邮件客户端中主动添加。" />
       <div className="sd-resource-grid">
-        <article><span>CSV</span><h3>BOM 整理模板</h3><p>完整型号、品牌、需求数量、目标日期。</p><a href="/resources/bom-template.csv" download>下载 BOM 模板 ↓</a></article>
-        <article><span>TXT</span><h3>质量核对清单</h3><p>规格、标签批次、包装、流转、检测与异常。</p><a href="/resources/quality-checklist.txt" download>下载质量清单 ↓</a></article>
-        <article><span>TXT</span><h3>选型沟通清单</h3><p>参数、封装、温度、接口、生命周期与替代边界。</p><a href="/resources/selection-checklist.txt" download>下载选型清单 ↓</a></article>
+        <article><span>CSV</span><h3>BOM 整理模板</h3><p>完整型号、品牌、需求数量、目标日期。</p><a href={assetPath("/resources/bom-template.csv")} download>下载 BOM 模板 ↓</a></article>
+        <article><span>TXT</span><h3>质量核对清单</h3><p>规格、标签批次、包装、流转、检测与异常。</p><a href={assetPath("/resources/quality-checklist.txt")} download>下载质量清单 ↓</a></article>
+        <article><span>TXT</span><h3>选型沟通清单</h3><p>参数、封装、温度、接口、生命周期与替代边界。</p><a href={assetPath("/resources/selection-checklist.txt")} download>下载选型清单 ↓</a></article>
       </div>
     </div></section>
 

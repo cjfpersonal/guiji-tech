@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { RouteTransition } from "@/components/route-transition";
 import { getSiteUrl, salesEmail, salesPhone, siteConfig } from "@/lib/site";
+import { assetPath } from "@/lib/base-path";
 import "./globals.css";
 import "./home-v3.css";
 import "./sourcedesk.css";
@@ -28,21 +29,21 @@ export const metadata: Metadata = {
   creator: siteConfig.legalName,
   publisher: siteConfig.legalName,
   category: "Electronic components and supply chain services",
-  alternates: { canonical: "/" },
+  alternates: { canonical: assetPath("/") },
   openGraph: {
     type: "website",
     locale: "zh_CN",
-    url: "/",
+    url: assetPath("/"),
     siteName: siteConfig.shortName,
     title: "为关键器件，找到可验证的供应路径。",
     description: siteConfig.description,
-    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "硅基深度求索科技 — 为关键器件，找到清晰路径" }],
+    images: [{ url: assetPath("/opengraph-image.png"), width: 1200, height: 630, alt: "硅基深度求索科技 — 为关键器件，找到清晰路径" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "硅基深度求索科技｜关键器件寻源与供应链服务",
     description: siteConfig.description,
-    images: ["/opengraph-image.png"],
+    images: [assetPath("/opengraph-image.png")],
   },
   robots: {
     index: true,

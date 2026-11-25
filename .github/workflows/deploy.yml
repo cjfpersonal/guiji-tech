@@ -1,0 +1,85 @@
+name: Deploy static site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  NEXT_PUBLIC_ALLOW_LOCAL_SITE_URL: "false"
+  NEXT_PUBLIC_SALES_EMAIL: "chenfeng@jyera.com"
+  NEXT_PUBLIC_SALES_PHONE: "+8613423882268"
+  NEXT_PUBLIC_COMPANY_ADDRESS: "广东省深圳市南山区粤海街道高新工业村 T3 栋 A 座 403"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Calculate public URL and base path
+        env:
+          REPOSITORY: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+          CUSTOM_DOMAIN: ${{ vars.PAGES_CUSTOM_DOMAIN }}
+        run: |
+          repo="${REPOSITORY#*/}"
+          custom_domain="${CUSTOM_DOMAIN:-}"
+          if [ -z "$custom_domain" ] && [ -f public/CNAME ]; then
+            custom_domain="$(tr -d '[:space:]' < public/CNAME)"
+          fi
+          if [ -n "$custom_domain" ]; then
+            site_url="https://${custom_domain}"
+            base_path=""
+            printf '%s\n' "$custom_domain" > public/CNAME
+          elif [ "$repo" = "${OWNER}.github.io" ]; then
+            site_url="https://${OWNER}.github.io"
+            base_path=""
+          else
+            site_url="https://${OWNER}.github.io/${repo}"
+            base_path="/${repo}"
+          fi
+          echo "NEXT_PUBLIC_SITE_URL=${site_url}" >> "$GITHUB_ENV"
+          echo "NEXT_PUBLIC_BASE_PATH=${base_path}" >> "$GITHUB_ENV"
+          echo "Deploying ${site_url} with basePath '${base_path}'"
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

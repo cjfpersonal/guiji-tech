@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { assetPath } from "@/lib/base-path";
 
 type EditorialImageProps = {
   src: string;
@@ -22,7 +23,7 @@ export function EditorialImage({
     <figure className={`media-frame ${className}`.trim()}>
       <div className="media-frame__image">
         <Image
-          src={src}
+          src={assetPath(src)}
           alt={alt}
           fill
           priority={priority}

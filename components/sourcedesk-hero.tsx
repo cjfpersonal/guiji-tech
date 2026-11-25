@@ -5,6 +5,7 @@ import { useState, type FormEvent, type KeyboardEvent } from "react";
 import { RfqIntentButton } from "@/components/rfq-intent-button";
 import { useRfq } from "@/components/rfq-context";
 import { salesEmail, salesPhone, salesPhoneHref } from "@/lib/site";
+import { assetPath } from "@/lib/base-path";
 
 const paths = [
   { id: "shortage", tab: "短缺料寻源", kicker: "01 / SOURCING", title: "让关键器件需求，进入可执行的寻源路径。", description: "从完整型号、数量、日期和交付地区开始，先定义真实约束，再沟通可行供应。", image: "/images/chip-hero-ice.webp", alt: "原创芯片封装与冰蓝技术光影概念摄影" },
@@ -39,10 +40,10 @@ export function SourceDeskHero() {
 
   return <section className="sd-hero" aria-labelledby="hero-title">
     {active === 0 && <>
-      <link rel="preload" as="image" href="/images/chip-hero-ice.webp" media="(min-width: 601px)" fetchPriority="high" />
-      <link rel="preload" as="image" href="/images/chip-hero-ice-mobile.webp" media="(max-width: 600px)" fetchPriority="high" />
+      <link rel="preload" as="image" href={assetPath("/images/chip-hero-ice.webp")} media="(min-width: 601px)" fetchPriority="high" />
+      <link rel="preload" as="image" href={assetPath("/images/chip-hero-ice-mobile.webp")} media="(max-width: 600px)" fetchPriority="high" />
     </>}
-    <div className="sd-hero__media"><picture><source media="(max-width: 600px)" srcSet={current.id === "shortage" ? "/images/chip-hero-ice-mobile.webp" : current.image} /><img key={current.image} src={current.image} alt={current.alt} width={1000} height={750} loading="eager" fetchPriority={active === 0 ? "high" : "auto"} decoding="async" /></picture></div>
+    <div className="sd-hero__media"><picture><source media="(max-width: 600px)" srcSet={current.id === "shortage" ? assetPath("/images/chip-hero-ice-mobile.webp") : assetPath(current.image)} /><img key={current.image} src={assetPath(current.image)} alt={current.alt} width={1000} height={750} loading="eager" fetchPriority={active === 0 ? "high" : "auto"} decoding="async" /></picture></div>
     <div className="sd-hero__shade" aria-hidden="true" />
     <div className="sd-container sd-hero__content" id={`hero-panel-${current.id}`} role="tabpanel" aria-labelledby={`hero-tab-${current.id}`}>
       <div className="sd-hero__copy" key={current.id}>

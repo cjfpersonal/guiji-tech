@@ -182,6 +182,20 @@ curl -s http://127.0.0.1:4173/ | grep 'chenfeng@jyera.com'
 curl -s http://127.0.0.1:4173/sitemap.xml
 ```
 
+## GitHub Pages 自动部署
+
+工作流位于 `.github/workflows/deploy.yml`：`main` 每次 push 或手动 `workflow_dispatch` 都会使用 Node 22、`npm ci` 和 `npm run build` 生成 `out`，再通过 `upload-pages-artifact` / `deploy-pages` 发布；`pages` concurrency 不会取消进行中的部署。
+
+首次使用需执行：
+
+1. 在 GitHub 仓库 **Settings → Actions → General** 启用 Actions，并允许工作流写入；在 **Settings → Pages → Source** 选择 **GitHub Actions**。
+2. 审查并提交本工作流及静态导出配置，然后 `git push origin main`。
+3. 在 Actions 查看部署结果。当前 remote 为 `cjfpersonal/guiji-tech`，默认地址为 **https://cjfpersonal.github.io/guiji-tech/**。
+
+工作流根据仓库名自动设置 `NEXT_PUBLIC_SITE_URL` 和 `NEXT_PUBLIC_BASE_PATH`：普通仓库使用 `https://OWNER.github.io/REPO/`；仓库名为 `OWNER.github.io` 时使用 `https://OWNER.github.io/` 根站。Next.js `basePath`、Next/Image、普通图片、下载、manifest/icon、OG、canonical、sitemap 和 robots 会统一添加子路径，`public/.nojekyll` 随构建发布。
+
+绑定自定义域名时，可在仓库 **Settings → Variables → Actions** 添加 `PAGES_CUSTOM_DOMAIN=www.example.com`，或提交 `public/CNAME`。工作流会使用根路径和 HTTPS 自定义域名，并自动写入 CNAME；DNS 需先指向 GitHub Pages。首次启用前还应确认 Pages 与 Actions 权限。
+
 ## 静态部署与安全头
 
 ### Netlify / Cloudflare Pages
