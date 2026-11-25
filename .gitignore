@@ -1,0 +1,24 @@
+# dependencies
+/node_modules
+
+# Next.js
+/.next
+/out
+
+# tests and local tooling
+/test-results
+/playwright-report
+/coverage
+/tmp/imagegen
+/output/imagegen
+*.tsbuildinfo
+next-env.d.ts
+
+# local environment and logs
+.env
+.env.local
+.env.*.local
+*.log
+
+# OS
+.DS_Store

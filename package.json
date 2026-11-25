@@ -1,0 +1,36 @@
+{
+  "name": "sds-technology-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "深圳市硅基深度求索科技有限公司官方网站",
+  "scripts": {
+    "dev": "next dev --port 4173",
+    "build": "next build",
+    "start": "serve out -l tcp://127.0.0.1:4173 --no-port-switching --no-clipboard",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "tsx --test tests/rfq.test.ts",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:e2e"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "dependencies": {
+    "next": "16.4.6",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.0",
+    "eslint-config-next": "16.4.6",
+    "serve": "^14.2.5",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.3"
+  }
+}
